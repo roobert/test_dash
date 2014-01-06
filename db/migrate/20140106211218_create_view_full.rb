@@ -32,6 +32,8 @@ class CreateViewFull < ActiveRecord::Migration
   end
 
   def down
-    drop_table :view_full
+    execute <<-SQL
+      DROP VIEW view_full;
+    SQL
   end
 end
