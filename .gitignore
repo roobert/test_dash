@@ -1,0 +1,8 @@
+.*.swp
+.*.swo
+.sass-cache
+lib/switch_data_parser
+lib/switch_data_parser.rb
+lib/towser
+data
+db/db.sql

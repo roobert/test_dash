@@ -1,0 +1,27 @@
+!!! Strict
+%html{:xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    // page title
+    %title
+      = 'App'
+
+    // meta
+    %meta{'http-equiv' => "Content-type", :content => "text/html;charset=UTF-8"}
+
+    // load styles
+    %link{:rel   => "stylesheet",
+          :href  => "/css/default.css",
+          :title => "default",
+          :type  => "text/css",
+          :media => "screen"}
+
+  %body
+    %div#header
+      %div#title
+        %a{:href => "/"}= 'App'
+      %div#tagline= 'App Description'
+
+    %div#content
+      = yield
+
+    %div#footer

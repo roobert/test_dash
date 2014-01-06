@@ -1,0 +1,72 @@
+/* rob_layout is the same as rob_adidas_layout, just replace
+ * background blue:  #006699 with red:i    #bb1111
+ * text yellowgreen: #99bb00/#ccee00 with pinkred: #ef5757 */
+
+// text colors
+$text_c         : gray;
+$header_c       : white; // this is the header
+$tagline_c      : white;
+$headers_c      : white; // these are the headers h1/h2/h3 etc
+$header_links_c : orange;
+$header_hover_c : white;
+$links_c        : white;
+$links_hover_c  : $header_links_c;
+$codeblock_c    : #222222;
+$navbar_hover_c : $links_hover_c;
+$navbar_links_c : gray;
+$navbar_c       : $navbar_links_c;
+
+// background colors
+$header_bg        : black;
+$body_bg          : #111111;
+$content_bg       : #111111;
+$footer_bg        : $header_bg;
+$page_bg          : black;
+$codeblock_bg     : #222222;
+$navbar_top_bg    : #111111;
+$navbar_bottom_bg : $navbar_top_bg;
+
+// sizes
+$page_width : 860px;
+
+body {
+  margin: 0px;
+  background: $page_bg;
+  font: {
+    family: Arial, Verdana, "Bitstream Vera Sans", Helvetica, sans-serif; 
+    size: 11px;
+  }
+}
+
+div#title {
+  font-size: 30px ! important;
+}
+  
+a {
+  color: $links_c;
+  text-decoration: none;
+  &:hover {
+    color: $links_hover_c;
+  }
+}
+
+#header a, {
+  color: $header_links_c !important;
+  &:hover {
+    color: $header_hover_c !important;
+  }
+}
+
+#header {
+  margin: 20px auto 0;
+  width: $page_width;
+  color: $header_c;
+}
+
+#content {
+  padding: 5px 10px;
+  margin: 0 auto;
+  width: $page_width;
+  background: $body_bg;
+  color: $text_c;
+}
