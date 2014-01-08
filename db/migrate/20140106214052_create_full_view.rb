@@ -1,7 +1,7 @@
-class CreateViewFull < ActiveRecord::Migration
+class CreateFullView < ActiveRecord::Migration
   def up
     execute <<-SQL
-      CREATE VIEW view_full AS
+      CREATE VIEW full_views AS
         SELECT
           networks.location AS location,
           switches.hostname AS switch,
@@ -33,7 +33,7 @@ class CreateViewFull < ActiveRecord::Migration
 
   def down
     execute <<-SQL
-      DROP VIEW view_full;
+      DROP VIEW full_views;
     SQL
   end
 end

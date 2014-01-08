@@ -1,0 +1,6 @@
+// switches on this network
+%ul
+  - network = Network.where(location: @network)
+  - Switch.where("network_id" => network).each do |row|
+    %li
+      %a{href: "/#{@network}/#{row.hostname}/"}= row.hostname

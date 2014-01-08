@@ -1,0 +1,21 @@
+// interfaces on this switch
+
+- switch = Switch.where(hostname: @switch)
+- ethernet_interfaces = EthernetInterface.where(switch_id: switch)
+
+%table
+  %tr
+    %th description
+    %th stack_member
+    %th speed
+    %th port
+  - ethernet_interfaces.each do |row|
+    %tr
+      %td
+        %a{href: "/#{@network}/#{@switch}/"}= row.description
+      %td
+        %a{href: "/#{@network}/#{@switch}/"}= row.stack_member
+      %td
+        %a{href: "/#{@network}/#{@switch}/"}= row.speed
+      %td
+        %a{href: "/#{@network}/#{@switch}/"}= row.port

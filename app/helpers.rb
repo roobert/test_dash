@@ -93,7 +93,7 @@
 
             if switchport.type
               if switchport.type.respond_to?(:tagged)
-                tagged = switchport.type.tagged.tagged if switchport.type.tagged.respond_to?(:tagged)
+                tagged = 'true' if switchport.type.tagged.tagged if switchport.type.tagged.respond_to?(:tagged)
               end
 
               if switchport.type.respond_to?(:acceptable_frame_type)

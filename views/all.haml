@@ -1,0 +1,30 @@
+%table
+  %tr
+    %th location
+    %th switch
+    %th stack_member
+    %th speed
+    %th port
+    %th port_description
+    %th mode
+    %th port_type
+    %th tagged
+    %th acceptable_frame_type
+    %th permission
+    %th vlan
+    %th vlan_description
+  - SecondView.all.each do |row|
+    %tr
+      %td= row.location
+      %td= row.switch
+      %td= row.stack_member
+      %td= row.speed
+      %td= row.port
+      %td= row.port_description
+      %td= row.mode
+      %td= row.port_type
+      %td= row.tagged
+      %td= row.acceptable_frame_type
+      %td= row.permission
+      %td= row.vlan
+      %td= row.vlan_description

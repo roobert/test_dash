@@ -41,4 +41,5 @@ class Vlan < ActiveRecord::Base
   belongs_to :switchport
 end
 
-class SwitchView < ActiveRecord::Base; end
+class FullView < ActiveRecord::Base; end
+class SecondView < ActiveRecord::Base; end
