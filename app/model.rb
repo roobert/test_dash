@@ -9,6 +9,19 @@ class Switch < ActiveRecord::Base
   has_many :ethernet_interfaces
 end
 
+class Machine < ActiveRecord::Base
+  has_many :machine_interfaces
+end
+
+class MachineInterface < ActiveRecord::Base
+  belongs_to :machine
+  has_many :ip_addresses
+end
+
+class IpAddress < ActiveRecord::Base
+  belongs_to :machine_interface
+end
+
 class BridgeAddressTable < ActiveRecord::Base
   belongs_to :switch
   has_many :bridge_vlans
@@ -20,6 +33,7 @@ class BridgeVlan < ActiveRecord::Base
 end
 
 class Mac < ActiveRecord::Base
+  belongs_to :switchport
   belongs_to :bridge_vlan
 end
 
@@ -35,6 +49,7 @@ end
 class Switchport < ActiveRecord::Base
   belongs_to :ethernet_interface
   has_many :vlans
+  has_many :macs
 end
 
 class Vlan < ActiveRecord::Base
@@ -43,3 +58,4 @@ end
 
 class FullView < ActiveRecord::Base; end
 class SecondView < ActiveRecord::Base; end
+class MachineView < ActiveRecord::Base; end

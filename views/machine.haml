@@ -1,0 +1,23 @@
+%h2
+  = "/"
+  %a{href: "/machines"} machines
+  = "/"
+  %a{href: "/machines/#{@machine}"} #{@machine}
+%table
+  %tr
+    %th interface
+    %th mac
+    %th member
+    %th active_interface
+    %th slaves
+    %th active_in_bond
+    %th ip
+  - MachineView.where(hostname: @machine).each do |machine|
+    %tr
+      %td= machine.interface
+      %td= machine.mac
+      %td= machine.member
+      %td= machine.active_interface
+      %td= machine.slaves
+      %td= machine.active_in_bond
+      %td= machine.ip

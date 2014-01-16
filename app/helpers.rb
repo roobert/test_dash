@@ -1,10 +1,20 @@
 #!/usr/bin/env ruby
 
+  def select_
+  end
+
+  def normalise_mac_address(mac)
+    return nil unless mac
+    mac.gsub!(/[:.]/, '')
+    "#{mac[0..1]}:#{mac[2..3]}:#{mac[4..5]}:#{mac[6..7]}:#{mac[8..9]}:#{mac[10..11]}".upcase
+  end
+
   # options:
   #
   # * switches
   # * network  name
   #
+
   def load_data
 
     switches = %w[ispsw03xa ispsw03xg ispsw03yc ispsw03yh]
@@ -31,6 +41,37 @@
   end
 
   def translate_data
+    @network.machines.machines.each do |machine|
+
+      table_machine = Machine.create(:hostname => machine.identifier)
+
+      next unless machine.interfaces
+
+      machine.interfaces.each do |interface|
+        active = 'true' unless interface.active_in_bond.nil?
+        slaves = interface.slaves.join(',') unless interface.slaves.nil?
+
+        table_machine_interface = MachineInterface.create(
+            :interface        => interface.identifier,
+            :mac_address      => normalise_mac_address(interface.mac_address),
+            :member           => interface.member,
+            :active_interface => interface.active_interface,
+            :slaves           => slaves,
+            :active_in_bond   => active,
+            :machine          => table_machine,
+        )
+
+        next unless interface.ip_addresses
+
+        interface.ip_addresses.each do |ip|
+          IpAddress.create(
+              :ip => ip,
+              :machine_interface => table_machine_interface,
+          )
+        end
+      end
+    end
+
     [ @network ].each do |network|
 
       table_network = Network.create(:location => network.identifier)
@@ -58,7 +99,7 @@
 
             vlan.macs.each do |mac_data|
               Mac.create(
-                :mac         => mac_data[:mac],
+                :mac_address => normalise_mac_address(mac_data[:mac]),
                 :mode        => mac_data[:mode],
                 :bridge_vlan => bridge_vlan,
               )
@@ -119,18 +160,35 @@
             )
 
             next unless switchport.type
-            next unless switchport.type.respond_to?(:allowed)
-            next unless switchport.type.allowed.respond_to?(:allowed)
-            next unless switchport.type.allowed.allowed.respond_to?(:vlans)
 
-            switchport.type.allowed.allowed.vlans.each do |vlan|
-              Vlan.create(
-                :vlan       => vlan.identifier,
-                :switchport => table_switchport,
-              )
+            # cater for Access type which doesn't have permissions..
+            if switchport.type.respond_to?(:vlans)
+
+              switchport.type.vlans.each do |vlan|
+                Vlan.create(
+                  :vlan       => vlan.identifier,
+                  :switchport => table_switchport,
+                )
+              end
+
+            else
+
+              next unless switchport.type.respond_to?(:allowed)
+              next unless switchport.type.allowed.respond_to?(:allowed)
+              next unless switchport.type.allowed.allowed.respond_to?(:vlans)
+
+              switchport.type.allowed.allowed.vlans.each do |vlan|
+                Vlan.create(
+                  :vlan       => vlan.identifier,
+                  :switchport => table_switchport,
+                )
+              end
             end
           end
         end
       end
     end
   end
+
+## mac addresses are only associated with vlans - they should be associated with switchports too so 'access' mode shizzle will work.
+## if a switchport is in 'access' mode is it considered attached to vlan 1 by default? - if so we can do some jiggerypokery

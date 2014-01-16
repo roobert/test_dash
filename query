@@ -1,0 +1,14 @@
+SELECT
+  machines.hostname AS machine,
+  machine_interfaces.interface AS interface,
+  machine_interfaces.mac_address AS mac,
+  machine_interfaces.member AS member,
+  machine_interfaces.active_interface AS active_interface,
+  machine_interfaces.slaves AS slaves,
+  machine_interfaces.active_in_bond AS active_in_bond,
+  ip_addresses.ip  AS ip
+FROM
+  machines
+LEFT JOIN machine_interfaces ON machine_interfaces.machine_id     = machines.id
+LEFT JOIN ip_addresses       ON ip_addresses.machine_interface_id = machine_interfaces.id
+

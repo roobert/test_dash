@@ -1,24 +1,21 @@
 #!/usr/bin/env ruby
 
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
+
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/activerecord'
-
-Sinatra::Application.reset! 
-
 require 'haml'
 require 'sass'
-
 require 'active_record'
 require 'sqlite3'
 require 'awesome_print'
 require 'pp'
 require 'yaml'
-
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '../towser/lib'))
-
 require 'switch_data_parser'
-require 'towser'
+require 'network_data_translator'
+
+Sinatra::Application.reset!
 
 ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/db.sql')
 set :database, "sqlite3:///db/db.sql"
@@ -49,8 +46,17 @@ get '/css/:style.css' do
   scss :"#{params[:style]}"
 end
 
+get '/machines' do
+  haml :machines
+end
+
 get '/all' do
   haml :all
+end
+
+get '/machines/:machine' do
+  @machine = params[:machine]
+  haml :machine
 end
 
 get '/:network/:switch/:interface/' do
@@ -78,8 +84,3 @@ end
 get '/' do
   haml :networks
 end
-
-
-
-
-

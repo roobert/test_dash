@@ -14,6 +14,25 @@ ActiveRecord::Schema.define do
     t.belongs_to :network
   end
 
+  create_table :machines do |t|
+    t.column :hostname, :string
+  end
+
+  create_table :machine_interfaces do |t|
+    t.column :interface, :string
+    t.column :mac_address, :string
+    t.column :member, :string
+    t.column :active_interface, :string
+    t.column :slaves, :string
+    t.column :active_in_bond, :string
+    t.belongs_to :machine
+  end
+
+  create_table :ip_addresses do |t|
+    t.column :ip, :string
+    t.belongs_to :machine_interface
+  end
+
   create_table :vlan_interfaces do |t|
     t.column :description, :string
     t.column :vlan, :int
@@ -56,9 +75,10 @@ ActiveRecord::Schema.define do
   end
 
   create_table :macs do |t|
-    t.column :mac, :string
+    t.column :mac_address, :string
     t.column :mode, :string
     t.belongs_to :bridge_vlan
+    t.belongs_to :switchport
   end
 
   execute <<-SQL
@@ -77,7 +97,7 @@ ActiveRecord::Schema.define do
         switchports.permission AS permission,
         vlans.vlan AS vlan,
         vlan_interfaces.description AS vlan_description,
-        macs.mac AS mac
+        macs.mac_address AS mac
       FROM
         switches
       INNER JOIN networks              ON switches.network_id                  = networks.id
@@ -105,7 +125,8 @@ ActiveRecord::Schema.define do
         switchports.acceptable_frame_type AS acceptable_frame_type,
         switchports.permission            AS permission,
         vlans.vlan                        AS vlan,
-        macs.mac                          AS mac
+        macs.mac_address                  AS mac,
+        machines.hostname                 AS machine_hostname
 
       FROM
         networks 
@@ -124,5 +145,24 @@ ActiveRecord::Schema.define do
                                        AND bridge_vlans.vlan                    = vlans.vlan
 
       left  JOIN macs                  ON  macs.bridge_vlan_id                  = bridge_vlans.id
+      left  JOIN machine_interfaces    ON  machine_interfaces.mac_address       = macs.mac_address
+      left  JOIN machines              ON  machine_interfaces.machine_id        = machines.id
+  SQL
+
+  execute <<-SQL
+    CREATE VIEW machine_views AS
+      SELECT
+        machines.hostname AS hostname,
+        machine_interfaces.interface AS interface,
+        machine_interfaces.mac_address AS mac,
+        machine_interfaces.member AS member,
+        machine_interfaces.active_interface AS active_interface,
+        machine_interfaces.slaves AS slaves,
+        machine_interfaces.active_in_bond AS active_in_bond,
+        ip_addresses.ip  AS ip
+      FROM
+        machines
+      LEFT JOIN machine_interfaces ON machine_interfaces.machine_id     = machines.id
+      LEFT JOIN ip_addresses       ON ip_addresses.machine_interface_id = machine_interfaces.id
   SQL
 end

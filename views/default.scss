@@ -38,6 +38,18 @@ body {
   }
 }
 
+th {
+  background-color: #555;
+  color: black;
+  padding: 2px 3px;
+}
+
+
+td {
+  background-color: #333;
+  padding: 2px 3px;
+}
+
 div#title {
   font-size: 30px ! important;
 }

@@ -1,0 +1,21 @@
+%table
+  %tr
+    %th hostname
+    %th interface
+    %th mac
+    %th member
+    %th active_interface
+    %th slaves
+    %th active_in_bond
+    %th ip
+  - MachineView.all.each do |machine|
+    %tr
+      %td
+        %a{href: "/machines/#{machine.hostname}"}= machine.hostname
+      %td= machine.interface
+      %td= machine.mac
+      %td= machine.member
+      %td= machine.active_interface
+      %td= machine.slaves
+      %td= machine.active_in_bond
+      %td= machine.ip
