@@ -3,7 +3,7 @@
  * text yellowgreen: #99bb00/#ccee00 with pinkred: #ef5757 */
 
 // text colors
-$text_c         : gray;
+$text_c         : #ddd;
 $header_c       : white; // this is the header
 $tagline_c      : white;
 $headers_c      : white; // these are the headers h1/h2/h3 etc
@@ -39,9 +39,13 @@ body {
 }
 
 th {
-  background-color: #555;
-  color: black;
+  background-color: #444;
+  color: #ddd;
   padding: 2px 3px;
+}
+
+td {
+  vertical-align: top;
 }
 
 tr[alternate_background=true] td {

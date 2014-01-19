@@ -23,7 +23,7 @@ $(function() {
 
       if (
         ctrl.text() == $(tds[i]).text() &&
-        ctrl.text() != "" &&
+//        ctrl.text() != "" &&
         // we don't want to merge column cells between different network interfaces
         $(tds[i]).closest('tr').attr('interface') == undefined
       ) {
@@ -45,6 +45,8 @@ $(function() {
     }
   }
   // FIXME: silly hack because this javascript doesnt work properly..
+  groupTable($('#table tr:has(td)'),0,1);
+  groupTable($('#table tr:has(td)'),1,1);
   groupTable($('#table tr:has(td)'),2,1);
   groupTable($('#table tr:has(td)'),3,1);
   groupTable($('#table tr:has(td)'),4,1);
@@ -55,7 +57,8 @@ $(function() {
   groupTable($('#table tr:has(td)'),9,1);
   groupTable($('#table tr:has(td)'),10,1);
   groupTable($('#table tr:has(td)'),11,1);
-  groupTable($('#table tr:has(td)'),12,1);
+  // FIXME: should merge blank cells for this column
+  //groupTable($('#table tr:has(td)'),12,1);
   groupTable($('#table tr:has(td)'),13,1);
   groupTable($('#table tr:has(td)'),14,1);
   groupTable($('#table tr:has(td)'),15,1);
