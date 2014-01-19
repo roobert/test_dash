@@ -44,9 +44,13 @@ th {
   padding: 2px 3px;
 }
 
-
-td {
+tr[alternate_background=true] td {
   background-color: #333;
+  padding: 2px 3px;
+}
+
+tr[alternate_background=false] td {
+  background-color: #444;
   padding: 2px 3px;
 }
 
