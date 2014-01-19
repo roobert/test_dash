@@ -3,7 +3,6 @@
 .sass-cache
 lib/switch_data_parser
 lib/switch_data_parser.rb
-lib/towser
 lib
 data
 db/db.sql
