@@ -47,7 +47,7 @@ get '/machines' do
   haml :machines
 end
 
-get '/all' do
+get '/' do
   @data  = network_view('%')
 
   haml :network
@@ -76,9 +76,4 @@ get '/:network/:switch/:interface/' do
   @interface = params[:interface]
 
   haml :interface
-end
-
-
-get '/' do
-  haml :networks
 end
