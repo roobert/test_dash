@@ -1,4 +1,7 @@
-%table
+%table#table
+  %tr
+    %th{colspan: 11} switch
+    %th{colspan: 7} machine
   %tr
     %th location
     %th switch
@@ -10,13 +13,14 @@
     %th acceptable_frame_type
     %th permission
     %th vlan
-    %th switchport mac address
-    %th machine interface
-    %th machine member
-    %th machine slaves
-    %th machine active_interface
-    %th machine active in bond
-    %th machine hostname
+    %th visible mac address
+    %th interface mac address
+    %th interface
+    %th member
+    %th slaves
+    %th active_interface
+    %th active in bond
+    %th hostname
   - SecondView.all.each do |row|
     %tr
       %td= row.location
@@ -30,9 +34,14 @@
       %td= row.permission
       %td= row.vlan
       %td= row.mac
+      %td= row.mac_address
       %td= row.interface
       %td= row.member
       %td= row.slaves
       %td= row.active_interface
       %td= row.active_in_bond
       %td= row.machine_hostname
+
+
+%script{:type => "text/javascript", :src  => "http://code.jquery.com/jquery-1.10.1.min.js"}
+%script{:type => "text/javascript", :src  => "/merge.js"}
