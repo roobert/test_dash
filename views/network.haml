@@ -1,0 +1,90 @@
+%table#table
+  %tr
+    %th{colspan: 11} switch
+    %th{colspan: 7} machine
+  %tr
+    %th location
+    %th switch
+    %th interface
+    %th port_description
+    %th mode
+    %th port_type
+    %th tagged
+    %th acceptable_frame_type
+    %th permission
+    %th vlan
+    %th visible mac address
+    %th interface mac address
+    %th interface
+    %th member
+    %th slaves
+    %th active_interface
+    %th active in bond
+    %th hostname
+
+  - old_interface        = nil
+  - alternate_background = false
+
+  // FIXME: should order by machine hostname after network/switch/port
+  // FIXME: refactor this craziness..
+  - @data.all.each do |row|
+
+    - interface = "#{row.stack_member}/#{row.speed}#{row.port}"
+
+    // only tag first row of rows with interface name
+    - if old_interface != interface
+
+      // if new row, change background colour for all subsequent rows before next interface
+      - if alternate_background == 'true'
+        - alternate_background = 'false'
+      - else
+        - alternate_background = 'true'
+
+      %tr{alternate_background: alternate_background, interface: interface}
+        %td= row.location
+        %td= row.switch 
+        %td= interface 
+        %td= row.port_description
+        %td= row.mode
+        %td= row.port_type
+        %td= row.tagged
+        %td= row.acceptable_frame_type
+        %td= row.permission
+        %td= row.vlan
+        %td= row.mac
+        %td= row.mac_address
+        %td= row.interface
+        %td= row.member
+        %td= row.slaves
+        %td= row.active_interface
+        %td= row.active_in_bond
+        %td= row.machine_hostname
+
+    - else
+
+      - interface_attr = {foo: 'bar'}
+
+      %tr{alternate_background: alternate_background}
+        %td= row.location
+        %td= row.switch 
+        %td= interface 
+        %td= row.port_description
+        %td= row.mode
+        %td= row.port_type
+        %td= row.tagged
+        %td= row.acceptable_frame_type
+        %td= row.permission
+        %td= row.vlan
+        %td= row.mac
+        %td= row.mac_address
+        %td= row.interface
+        %td= row.member
+        %td= row.slaves
+        %td= row.active_interface
+        %td= row.active_in_bond
+        %td= row.machine_hostname
+
+    - old_interface = interface
+
+%script{:type => "text/javascript", :src  => "http://code.jquery.com/jquery-1.10.1.min.js"}
+%script{:type => "text/javascript", :src  => "/merge.js"}
