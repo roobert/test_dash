@@ -1,8 +1,6 @@
+lib
 .*.swp
 .*.swo
 .sass-cache
-lib/switch_data_parser
-lib/switch_data_parser.rb
-lib
 data
-db/db.sql
+db

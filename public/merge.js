@@ -45,9 +45,8 @@ $(function() {
     }
   }
   // FIXME: silly hack because this javascript doesnt work properly..
-  groupTable($('#table tr:has(td)'),0,1);
-  groupTable($('#table tr:has(td)'),1,1);
-  groupTable($('#table tr:has(td)'),2,1);
+  groupTable($('#table tr:has(td)'),0,3);
+  //groupTable($('#table tr:has(td)'),10,1);
   groupTable($('#table tr:has(td)'),3,1);
   groupTable($('#table tr:has(td)'),4,1);
   groupTable($('#table tr:has(td)'),5,1);

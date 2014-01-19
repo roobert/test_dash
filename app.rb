@@ -20,12 +20,23 @@ ActiveRecord::Base.establish_connection(adapter: 'sqlite3', database: 'db/db.sql
 
 set :database, "sqlite3:///db/db.sql"
 
-def view_switch_full(switch)
-  SwitchView.where("switch" => switch)
-end
-
 def e(string)
   Rack::Utils.escape_html(string)
+end
+
+helpers do
+  def network_view(location)
+    NetworkView.where('location like (?)', location)
+  end
+
+  def switch_view(location, switch)
+#SwitchView.where(switch: switch)
+    NetworkView.where('location like (?) and switch like (?)', location, switch)
+  end
+
+  def port_view(stack_member, speed, port)
+    PortView.where(stack_member: stack_member, speed: speed, port: port)
+  end
 end
 
 get '/css/:style.css' do
@@ -37,7 +48,21 @@ get '/machines' do
 end
 
 get '/all' do
-  haml :all
+  @data  = network_view('%')
+
+  haml :network
+end
+
+get '/:network/?' do
+  @data  = network_view(params[:network])
+
+  haml :network
+end
+
+get '/:network/:switch/?' do
+  @data = switch_view(params[:network], params[:switch])
+
+  haml :network
 end
 
 get '/machines/:machine' do
@@ -53,18 +78,6 @@ get '/:network/:switch/:interface/' do
   haml :interface
 end
 
-get '/:network/:switch/?' do
-  @network   = params[:network]
-  @switch    = params[:switch]
-
-  haml :interfaces
-end
-
-get '/:network/?' do
-  @network = params[:network]
-
-  haml :switches
-end
 
 get '/' do
   haml :networks

@@ -27,7 +27,7 @@ $navbar_top_bg    : #111111;
 $navbar_bottom_bg : $navbar_top_bg;
 
 // sizes
-$page_width : 1200px;
+//$page_width : 1200px;
 
 body {
   margin: 0px;
@@ -61,7 +61,7 @@ tr[alternate_background=false] td {
 div#title {
   font-size: 30px ! important;
 }
-  
+
 a {
   color: $links_c;
   text-decoration: none;
@@ -79,14 +79,20 @@ a {
 
 #header {
   margin: 20px auto 0;
-  width: $page_width;
+  width: 1092px;
   color: $header_c;
 }
 
-#content {
-  padding: 5px 10px;
+table {
   margin: 0 auto;
-  width: $page_width;
   background: $body_bg;
+  padding: 5px 5px;
+}
+
+#content {
+  padding: 5px 0px;
+  margin: 0 auto;
+  //width: $page_width;
+  //background: $body_bg;
   color: $text_c;
 }
