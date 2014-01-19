@@ -10,8 +10,14 @@
     %th acceptable_frame_type
     %th permission
     %th vlan
-    %th mac
-    %th machine_hostname
+    %th machine interface
+    %th machine mac address
+    %th machine member
+    %th machine slaves
+    %th machine active_interface
+    %th machine active in bond
+    %th mac address
+    %th machine hostname
   - SecondView.all.each do |row|
     %tr
       %td= row.location
@@ -24,5 +30,11 @@
       %td= row.acceptable_frame_type
       %td= row.permission
       %td= row.vlan
+      %td= row.interface
+      %td= row.mac_address
+      %td= row.member
+      %td= row.slaves
+      %td= row.active_interface
+      %td= row.active_in_bond
       %td= row.mac
       %td= row.machine_hostname
